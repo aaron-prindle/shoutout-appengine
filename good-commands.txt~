@@ -1,7 +1,0 @@
-dev_appserver.py shoutouts-appengine/
-
-appcfg.py update shoutouts-appengine/
-
-appcfg.py download_data --config_file=bulkloader.yaml --filename=dump-shoutout.csv --kind=Shout --url=http://shoutoutprindle.appspot.com/_ah/remote_api
-
-
