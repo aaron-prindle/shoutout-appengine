@@ -1,0 +1,22 @@
+RUN SERVER LOCALLY:
+dev_appserver.py shoutouts-appengine/
+
+UPDATE APP ON SERVER:
+appcfg.py update shoutouts-appengine/
+
+DOWNLOAD SERVER DATA (CSV):
+appcfg.py download_data --config_file=bulkloader.yaml --filename=dump-shoutout.csv --kind=Shout --url=http://shoutoutprindle.appspot.com/_ah/remote_api
+
+REMOTE API:
+(use inside project dir)
+python ~/google_appengine/remote_api_shell.py -s shoutoutprindle.appspot.com
+(then in shell, import python files that you want: EXAMPLE: import main)
+
+SUCCESSFULLY UPDATED OLD ENTRIES w/ AUTHOR PARAMETER:
+~/shoutouts-appengine$ python ~/google_appengine/remote_api_shell.py -s shoutoutprindle.appspot.com
+(in python shell)
+shouts = ndb.gql('SELECT * FROM Shout')
+for shout in shouts:
+...   if shout.author is None:
+...     shout.author = "Anonymous"
+...     shout.put()

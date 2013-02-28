@@ -1,0 +1,11 @@
+<h1>Shoutout!</h1>
+
+{% for shout in shouts %}
+<div>{{shout.message}} BY: {{shout.author}}</div>
+{% endfor %}
+
+<form action="" method="post" accept-charset="utf-8">
+  <p>Message: <input type="text" name="message" value="" id="message" /></p>
+    <p>Author: <input type="text" name="author" value="" id="author" /></p>
+  <p><input type="submit" value="shout!" /></p>
+</form>

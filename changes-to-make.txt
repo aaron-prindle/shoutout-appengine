@@ -1,0 +1,2 @@
+add admin to /update_schema route
+seperate modules for models, routes, etc.
