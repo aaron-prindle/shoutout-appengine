@@ -11,15 +11,11 @@ from google.appengine.ext.webapp \
 class Shout(ndb.Model):
     message = ndb.StringProperty(required=True)
     when = ndb.DateTimeProperty(auto_now_add=True)
-    #ADDED
     author = ndb.StringProperty(required=True)
-
 
 class MainHandler(webapp.RequestHandler):
     def get(self):
-        shouts = ndb.gql(
-            """SELECT * FROM Shout
-            LIMIT 10""")
+        shouts = ndb.gql("SELECT * FROM Shout") #LIMIT 10?
         values = {'shouts':shouts}
         self.response.out.write(
           template.render('main.html',values))
@@ -33,5 +29,14 @@ class UpdateHandler(webapp.RequestHandler):
         deferred.defer(update_schema.UpdateSchema)
         self.response.out.write('Schema migration successfully initiated.')
 
+class ShutdownHandler(webapp.RequestHandler):
+    def get(self):
+        self.response.out.write(
+          template.render('shutdown.html',{}))
+
+        
 app = webapp.WSGIApplication([
     (r'/',MainHandler),('/update_schema', UpdateHandler)], debug=True)
+
+shutdown = webapp.WSGIApplication([
+    (r'/',ShutdownHandler)], debug=True)
